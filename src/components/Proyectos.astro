@@ -1,0 +1,71 @@
+---
+interface Proyecto {
+  titulo: string;
+  descripcion: string;
+  imagen: string;
+  alt: string;
+  enlace: string;
+}
+
+const PROYECTOS: Proyecto[] = [
+  {
+    titulo: "Sitio Web Corporativo",
+    descripcion: "Desarrollo de un sitio institucional enfocado en claridad, estructura y confianza para una marca de servicios.",
+    imagen: "/drake-pagina-web.png",
+    alt: "Maqueta del proyecto Drake Abogados",
+    enlace: "https://drakeabogados.com/"
+  },
+  {
+    titulo: "Landing Page de Conversión",
+    descripcion: "Landing optimizada para comunicar valor de forma directa y guiar al usuario hacia una acción concreta.",
+    imagen: "/work-pagina-web.png",
+    alt: "Landing page para generar conversiones",
+    enlace: "https://workappareluniformes.com/"
+  },
+  {
+    titulo: "Sitio Web Corporativo",
+    descripcion: "Desarrollo de un sitio web enfocado en resolver una necesidad específica mediante lógica clara.",
+    imagen: "/nexfra-pagina-web.png",
+    alt: "Sitio web corporativo",
+    enlace: "https://nexfra.com.mx/"
+  }
+];
+---
+
+<!-- =================== SECCIÓN DE PROYECTOS ====================== -->
+<section id="projects" class="py-24 px-6">
+
+  <!-- Header -->
+  <div class="max-w-2xl mx-auto text-center mb-16">
+    <h2 class="text-3xl font-semibold mb-4">Proyectos destacados</h2>
+    <p class="text-gray-400">
+      Casos reales que demuestran cómo abordo problemas, tomo decisiones y
+      construyo soluciones funcionales.
+    </p>
+  </div>
+
+  <!-- Grid -->
+  <ul class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 max-w-6xl mx-auto">
+    {PROYECTOS.map((proyecto) => (
+      <li>
+        <a href={proyecto.enlace} target="_blank" rel="noopener"
+          class="block border border-blue-400/30 rounded-xl overflow-hidden hover:shadow-lg transition glass-container">
+
+          <img
+            src={proyecto.imagen}
+            alt={proyecto.alt}
+            class="w-full h-48 object-cover"
+          />
+
+          <div class="p-6">
+            <h3 class="text-lg font-semibold mb-2">{proyecto.titulo}</h3>
+            <p class="text-sm text-gray-400">
+              {proyecto.descripcion}
+            </p>
+          </div>
+        </a>
+      </li>
+    ))}
+  </ul>
+
+</section>

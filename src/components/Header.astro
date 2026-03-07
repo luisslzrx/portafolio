@@ -1,0 +1,107 @@
+---
+---
+
+<header
+  id="mainHeader"
+  class="fixed top-0 left-0 w-full z-[999] transition-all duration-500 ease-in-out"
+>
+  <div
+    class="max-w-[1200px] mx-auto px-7 py-6 flex items-center justify-between"
+  >
+    <!-- LOGO -->
+    <div>
+      <img
+        src="/images/logo-luis-salazar-removebg-preview.png"
+        alt="Luis Salazar"
+        class="block"
+        height="60"
+      />
+    </div>
+
+    <!-- BOTÓN HAMBURGUESA (SOLO MOBILE) -->
+    <div
+      id="menuToggle"
+      class="hidden max-[900px]:flex flex-col gap-[6px] cursor-pointer"
+    >
+      <span class="w-[26px] h-[2px] bg-white rounded-sm"></span>
+      <span class="w-[26px] h-[2px] bg-white rounded-sm"></span>
+      <span class="w-[26px] h-[2px] bg-white rounded-sm"></span>
+    </div>
+
+    <!-- MENU -->
+    <nav
+      id="navbar"
+      class="flex gap-9 transition-all duration-500 ease-in-out
+             max-[900px]:fixed
+             max-[900px]:top-[90px]
+             max-[900px]:right-5
+             max-[900px]:flex-col
+             max-[900px]:gap-6
+             max-[900px]:px-8
+             max-[900px]:py-6
+             max-[900px]:bg-white/10
+             max-[900px]:backdrop-blur-xl
+             max-[900px]:rounded-3xl
+             max-[900px]:shadow-[0_24px_64px_rgba(0,0,0,0.45)]
+             max-[900px]:opacity-0
+             max-[900px]:pointer-events-none
+             max-[900px]:-translate-y-2"
+    >
+      <a
+        href="#hero"
+        class="text-base font-medium text-white/90 whitespace-nowrap transition-opacity duration-300 hover:opacity-100"
+        >Inicio</a
+      >
+      <a
+        href="#servicios"
+        class="text-base font-medium text-white/90 whitespace-nowrap transition-opacity duration-300 hover:opacity-100"
+        >Servicios</a
+      >
+      <a
+        href="#projects"
+        class="text-base font-medium text-white/90 whitespace-nowrap transition-opacity duration-300 hover:opacity-100"
+        >Proyectos</a
+      >
+      <a
+        href="#pricing"
+        class="text-base font-medium text-white/90 whitespace-nowrap transition-opacity duration-300 hover:opacity-100"
+        >Precios</a
+      >
+    </nav>
+
+    <!-- CTA -->
+    <a
+      href="#contact"
+      class="px-[26px] py-[14px] rounded-full text-sm text-white
+             bg-white/15 border border-white/30
+             backdrop-blur-[14px]
+             shadow-[0_8px_28px_rgba(0,0,0,0.35),inset_0_1px_0_rgba(255,255,255,0.25)]
+             transition-transform duration-300 ease-in-out
+             hover:scale-110
+             max-[900px]:hidden"
+    >
+      Contacto →
+    </a>
+  </div>
+</header>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const navbar = document.getElementById('navbar');
+  
+  if (menuToggle && navbar) {
+    menuToggle.addEventListener('click', () => {
+      navbar.classList.toggle('opacity-0');
+      navbar.classList.toggle('pointer-events-none');
+      navbar.classList.toggle('-translate-y-2');
+    });
+    
+    // Cerrar menú al hacer clic en un enlace
+    const links = navbar.querySelectorAll('a');
+    links.forEach(link => {
+      link.addEventListener('click', () => {
+        navbar.classList.add('opacity-0', 'pointer-events-none', '-translate-y-2');
+      });
+    });
+  }
+</script>
