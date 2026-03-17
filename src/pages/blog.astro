@@ -1,0 +1,58 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import PostCard from "../components/PostCard.astro";
+
+const posts = await getCollection("blog");
+
+posts.sort((a, b) => b.data.date - a.data.date);
+---
+
+<Layout
+title="Blog de Desarrollo Web | Luis Salazar"
+description="Artículos sobre desarrollo web, Astro, JavaScript, SEO técnico y experiencias construyendo proyectos web."
+url="https://luissalazar.com.mx/blog"
+>
+
+<main class="w-full max-w-[900px] mx-auto px-6 md:px-8 pb-24">
+
+<section class="">
+
+  <!-- Banner -->
+
+
+  <div class="relative w-full min-h-[420px] flex items-center overflow-hidden">
+        <div class="max-w-xl px-4 sm:px-6 lg:px-8">
+        
+        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold">
+            Mi blog
+        </h1>
+
+        <p class="mt-6 text-base sm:text-lg leading-relaxed">
+            Artículos sobre desarrollo web, Astro, JavaScript, SEO técnico y experiencias construyendo proyectos web
+        </p>
+
+        </div>
+  </div>
+
+
+  <!-- GRID DE POSTS -->
+    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+
+    {posts.map(post => (
+      <PostCard
+        title={post.data.title}
+        description={post.data.description}
+        image={post.data.image}
+        url={`/blog/${post.slug}`}
+        date={post.data.date}
+      />
+    ))}
+
+  </div>
+
+</section>
+
+</main>
+
+</Layout>

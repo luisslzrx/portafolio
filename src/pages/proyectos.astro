@@ -1,0 +1,58 @@
+---
+import Layout from "../layouts/Layout.astro";
+import { getCollection } from "astro:content";
+import ProyectosCard from "../components/ProyectosCard.astro";
+
+const proyectos = await getCollection("proyectos");
+
+proyectos.sort((a, b) => b.data.date - a.data.date);
+---
+
+<Layout
+title="Proyectos Web | Luis Salazar"
+description="Proyectos de desarrollo web, aplicaciones y soluciones construidas con diferentes tecnologías."
+url="https://luissalazar.com.mx/proyectos"
+>
+
+<main class="w-full max-w-[900px] mx-auto px-6 md:px-8 pb-24">
+
+<section>
+
+  <!-- Banner -->
+
+  <div class="relative w-full min-h-[420px] flex items-center overflow-hidden">
+    <div class="max-w-xl px-2 sm:px-6 lg:px-8">
+      
+      <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold ">
+        Mis proyectos
+      </h1>
+
+      <p class="mt-6 text-base sm:text-lg leading-relaxed">
+        Proyectos de desarrollo web, aplicaciones y soluciones construidas con diferentes tecnologías
+      </p>
+
+    </div>
+  </div>
+
+  <!-- GRID -->
+
+  <div class="grid md:grid-cols-2 lg:grid-cols-2 gap-8">
+
+    {proyectos.map(proyecto => (
+      <ProyectosCard
+        title={proyecto.data.title}
+        description={proyecto.data.description}
+        image={proyecto.data.image}
+        url={proyecto.data.link}
+        date={proyecto.data.date}
+        tags={proyecto.data.tags}
+  />
+    ))}
+
+  </div>
+
+</section>
+
+</main>
+
+</Layout>
