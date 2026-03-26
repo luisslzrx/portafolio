@@ -1,9 +1,12 @@
 // @ts-check
 import { defineConfig } from 'astro/config';
 import tailwindcss from '@tailwindcss/vite';
+import sitemap from '@astrojs/sitemap';
 
 export default defineConfig({
-  output: 'static', // 👈 IMPORTANTE
+  site: 'https://luissalazar.com.mx', // 🔴 obligatorio
+  output: 'static',
+  integrations: [sitemap()], // 🔴 obligatorio
   vite: {
     plugins: [tailwindcss()]
   }
