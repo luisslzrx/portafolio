@@ -1,0 +1,308 @@
+---
+// FeaturedWork.astro
+import { getCollection } from "astro:content";
+
+const rawProjects = await getCollection("proyectos");
+rawProjects.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const projects = rawProjects.map((p) => ({
+  title: p.data.title,
+  description: p.data.description,
+  image: p.data.image,
+  tags: p.data.tags || [],
+  link: p.data.link,
+}));
+
+// Carrusel infinito con clones en los extremos para que al cargar
+// siempre haya un proyecto en el centro y los demás a los lados
+const carouselProjects = [
+  projects[projects.length - 1],
+  ...projects,
+  projects[0],
+];
+---
+<section class="w-full bg-white py-20 md:py-28 overflow-hidden">
+  <div class="w-full max-w-[1200px] mx-auto px-6 sm:px-8 md:px-8">
+    <!-- Header -->
+    <div class="flex flex-col items-center text-center mb-16">
+      <span class="bg-gray-100 text-gray-600 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
+        Proyectos
+      </span>
+      <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-black mb-6">
+        Trabajo Destacado
+      </h2>
+      <p class="text-xl md:text-2xl text-gray-500 max-w-2xl leading-relaxed font-medium">
+        Proyectos recientes que demuestran mi experiencia y enfoque técnico.
+      </p>
+    </div>
+  </div>
+
+  <!-- Carousel -->
+  <div class="relative w-full" data-carousel>
+    <!-- Prev button -->
+    <button
+      type="button"
+      data-carousel-prev
+      class="hidden md:flex absolute left-4 sm:left-8 md:left-[10%] lg:left-[12%] top-[45%] -translate-y-1/2 z-20 w-11 h-11 md:w-12 md:h-12 rounded-full bg-blue-500 hover:bg-black transition-colors items-center justify-center shadow-md cursor-pointer"
+      aria-label="Proyecto anterior"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="15 18 9 12 15 6"></polyline>
+      </svg>
+    </button>
+
+    <!-- Next button -->
+    <button
+      type="button"
+      data-carousel-next
+      class="hidden md:flex absolute right-4 sm:right-8 md:right-[10%] lg:right-[12%] top-[45%] -translate-y-1/2 z-20 w-11 h-11 md:w-12 md:h-12 rounded-full bg-blue-500 hover:bg-black transition-colors items-center justify-center shadow-md cursor-pointer"
+      aria-label="Siguiente proyecto"
+    >
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 text-white" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+        <polyline points="9 18 15 12 9 6"></polyline>
+      </svg>
+    </button>
+
+    <!-- Track -->
+    <div class="overflow-visible">
+      <div
+        data-carousel-track
+        class="relative flex items-stretch gap-8 md:gap-12 will-change-transform"
+      >
+        {carouselProjects.map((project) => (
+          <div class="shrink-0 w-[85%] sm:w-[80%] md:w-[75%] lg:w-[70%] flex">
+            <div class="w-full bg-gray-100 rounded-3xl p-6 md:p-10 flex flex-col md:flex-row items-center gap-8 md:gap-12">
+              <!-- Image / device mockup -->
+              <div class="w-full md:w-1/2 h-56 sm:h-64 md:h-72 lg:h-80 bg-gray-200 rounded-2xl overflow-hidden shrink-0 relative">
+                {project.link ? (
+                  <a href={project.link} target="_blank" rel="noopener noreferrer" class="block w-full h-full overflow-hidden">
+                    <img
+                      src={project.image}
+                      alt={project.title}
+                      class="w-full h-full object-cover object-top hover:scale-105 transition-transform duration-500"
+                      loading="lazy"
+                    />
+                  </a>
+                ) : (
+                  <img
+                    src={project.image}
+                    alt={project.title}
+                    class="w-full h-full object-cover object-top"
+                    loading="lazy"
+                  />
+                )}
+              </div>
+
+              <!-- Content -->
+              <div class="w-full md:w-1/2 flex flex-col justify-between self-stretch py-1 sm:py-2">
+                <div>
+                  <h3 class="text-2xl md:text-3xl font-bold text-black mb-3 line-clamp-1 min-h-[2rem] md:min-h-[2.25rem]" title={project.title}>
+                    {project.title}
+                  </h3>
+                  <p class="text-gray-500 text-base md:text-lg leading-relaxed mb-6 line-clamp-2 min-h-[3rem] md:min-h-[3.5rem]">
+                    {project.description}
+                  </p>
+                </div>
+                <div class="flex flex-wrap gap-2.5 mt-auto pt-4 md:justify-end">
+                  {project.tags.slice(0, 2).map((tag) => (
+                    <span class="bg-gray-200 text-gray-700 text-sm md:text-base font-medium px-4 md:px-5 py-1.5 md:py-2 rounded-full">
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+
+    <!-- Mobile Dots indicator (hidden on desktop, visible on mobile) -->
+    <div class="flex md:hidden justify-center items-center mt-6">
+      <div
+        class="inline-flex items-center gap-2 bg-[#D1D5DB] px-3.5 py-1.5 rounded-full shadow-inner"
+        data-carousel-dots
+      >
+        {projects.map((_, idx) => (
+          <button
+            type="button"
+            data-carousel-dot={idx}
+            class={`w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+              idx === 0 ? "bg-white scale-110 shadow-sm" : "bg-white/45"
+            }`}
+            aria-label={`Ir al proyecto ${idx + 1}`}
+          />
+        ))}
+      </div>
+    </div>
+  </div>
+
+  <!-- CTA -->
+  <div class="flex justify-center mt-14">
+    <a
+      href="/proyectos"
+      class="inline-block bg-blue-500 hover:bg-black transition-colors text-white font-medium text-base md:text-lg px-8 py-3.5 rounded-full shadow-sm"
+    >
+      Ver todos los proyectos
+    </a>
+  </div>
+</section>
+
+<script>
+  function initCarousels() {
+    document.querySelectorAll<HTMLElement>('[data-carousel]').forEach((carousel) => {
+      if ((carousel as any)._carouselInitialized) return;
+      (carousel as any)._carouselInitialized = true;
+
+      const track = carousel.querySelector<HTMLElement>('[data-carousel-track]');
+      const prevBtn = carousel.querySelector<HTMLElement>('[data-carousel-prev]');
+      const nextBtn = carousel.querySelector<HTMLElement>('[data-carousel-next]');
+      const dotsContainer = carousel.querySelector<HTMLElement>('[data-carousel-dots]');
+      const dots = dotsContainer ? Array.from(dotsContainer.querySelectorAll<HTMLElement>('[data-carousel-dot]')) : [];
+      if (!track || !track.parentElement) return;
+
+      const slides = Array.from(track.children) as HTMLElement[];
+      const totalSlides = slides.length;
+      if (totalSlides < 3) return;
+
+      const realCount = totalSlides - 2;
+      let currentIndex = 1; // Primer proyecto real centrado al cargar
+      let isTransitioning = false;
+
+      function getRealActiveIndex() {
+        if (currentIndex <= 0) return realCount - 1;
+        if (currentIndex >= totalSlides - 1) return 0;
+        return currentIndex - 1;
+      }
+
+      function updateDots() {
+        if (dots.length === 0) return;
+        const activeIdx = getRealActiveIndex();
+        dots.forEach((dot, idx) => {
+          if (idx === activeIdx) {
+            dot.className = 'w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer bg-white scale-110 shadow-sm';
+          } else {
+            dot.className = 'w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer bg-white/45';
+          }
+        });
+      }
+
+      function update(animate = true) {
+        if (!track || !track.parentElement) return;
+        const slide = slides[currentIndex];
+        if (!slide) return;
+
+        const parentWidth = track.parentElement.clientWidth;
+        const slideWidth = slide.offsetWidth;
+        const centerOffset = (parentWidth - slideWidth) / 2;
+        const targetX = -(slide.offsetLeft - centerOffset);
+
+        if (animate) {
+          track.style.transition = 'transform 500ms cubic-bezier(0.25, 1, 0.5, 1)';
+        } else {
+          track.style.transition = 'none';
+        }
+
+        track.style.transform = `translateX(${targetX}px)`;
+        updateDots();
+      }
+
+      function next() {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        currentIndex++;
+        update(true);
+
+        setTimeout(() => {
+          if (isTransitioning) {
+            isTransitioning = false;
+            handleBoundary();
+          }
+        }, 600);
+      }
+
+      function prev() {
+        if (isTransitioning) return;
+        isTransitioning = true;
+        currentIndex--;
+        update(true);
+
+        setTimeout(() => {
+          if (isTransitioning) {
+            isTransitioning = false;
+            handleBoundary();
+          }
+        }, 600);
+      }
+
+      function handleBoundary() {
+        if (currentIndex >= totalSlides - 1) {
+          currentIndex = 1;
+          update(false);
+        } else if (currentIndex <= 0) {
+          currentIndex = realCount;
+          update(false);
+        }
+        updateDots();
+      }
+
+      track.addEventListener('transitionend', (e) => {
+        if (e.target !== track) return;
+        isTransitioning = false;
+        handleBoundary();
+      });
+
+      nextBtn?.addEventListener('click', next);
+      prevBtn?.addEventListener('click', prev);
+
+      // Clics en los puntos indicadores (dots)
+      dots.forEach((dot, idx) => {
+        dot.addEventListener('click', () => {
+          if (isTransitioning) return;
+          isTransitioning = true;
+          currentIndex = idx + 1;
+          update(true);
+          setTimeout(() => {
+            if (isTransitioning) {
+              isTransitioning = false;
+              handleBoundary();
+            }
+          }, 600);
+        });
+      });
+
+      // Soporte táctil / swipe
+      let startX = 0;
+      track.addEventListener('touchstart', (e) => {
+        startX = e.touches[0].clientX;
+      }, { passive: true });
+
+      track.addEventListener('touchend', (e) => {
+        const diffX = startX - e.changedTouches[0].clientX;
+        if (Math.abs(diffX) > 40) {
+          if (diffX > 0) next();
+          else prev();
+        }
+      }, { passive: true });
+
+      // Centrado reactivo a resize
+      if (window.ResizeObserver) {
+        new ResizeObserver(() => update(false)).observe(track.parentElement);
+      } else {
+        window.addEventListener('resize', () => update(false));
+      }
+
+      // Posicionamiento inicial centrado con los demás a los lados
+      requestAnimationFrame(() => update(false));
+      setTimeout(() => update(false), 50);
+      setTimeout(() => update(false), 200);
+    });
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCarousels);
+  } else {
+    initCarousels();
+  }
+  document.addEventListener('astro:page-load', initCarousels);
+</script>

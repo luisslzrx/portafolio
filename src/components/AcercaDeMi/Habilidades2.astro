@@ -1,0 +1,108 @@
+---
+// Skills.astro
+const hardSkills = [
+  { emoji: "🎨", label: "UX / UI & Diseño Web" },
+  { emoji: "📱", label: "Desarrollo Responsive" },
+  { emoji: "⚡", label: "Optimización de Rendimiento" },
+  { emoji: "🔍", label: "SEO Técnico" },
+  { emoji: "🔌", label: "APIs & Web Services" },
+  { emoji: "🧩", label: "Programación Orientada a Objetos" },
+  { emoji: "📐", label: "Diseño de Soluciones" },
+  { emoji: "♻️", label: "Reutilización de Código & Modularidad" },
+];
+
+const softSkills = [
+  { emoji: "🔀", label: "Control de Versiones (Git & GitHub)" },
+  { emoji: "🐛", label: "Debugging & Diagnóstico" },
+  { emoji: "👀", label: "Code Review & Calidad" },
+  { emoji: "🧪", label: "Testing & Automatización" },
+  { emoji: "🤖", label: "Prompt Engineering & LLMs" },
+  { emoji: "⚡", label: "AI-Assisted Development" },
+  { emoji: "📊", label: "Evaluación de Código con IA" },
+  { emoji: "🤝", label: "Metodologías Ágiles & Trabajo en Equipo" },
+];
+---
+
+<section class="w-full bg-white py-20 md:py-28">
+  <div class="w-full">
+    <!-- Header -->
+    <div class="flex flex-col items-center text-center mb-16">
+      <span
+        class="bg-gray-100 text-gray-600 text-sm font-medium px-4 py-1.5 rounded-full mb-6"
+      >
+        Habilidades
+      </span>
+      <h2
+        class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-black mb-6"
+      >
+        Habilidades Profesionales
+      </h2>
+      <p
+        class="text-xl md:text-2xl text-gray-500 max-w-2xl leading-relaxed font-medium"
+      >
+        Combinando destrezas técnicas de desarrollo y diseño con ingeniería de software y desarrollo asistido por IA.
+      </p>
+    </div>
+
+    <!-- Columns -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-14">
+      <!-- Hard Skills -->
+      <div class="bg-gray-100 rounded-3xl px-8 md:px-10 py-10">
+        <h3 class="text-gray-500 text-2xl font-medium mb-8">Habilidades Técnicas</h3>
+        <ul class="flex flex-col gap-6">
+          {
+            hardSkills.map((skill) => (
+              <li class="flex items-center gap-4">
+                <span class="text-3xl">{skill.emoji}</span>
+                <span class="text-xl md:text-2xl font-bold text-black">
+                  {skill.label}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Engineering & AI Skills -->
+      <div class="bg-gray-100 rounded-3xl px-8 md:px-10 py-10">
+        <h3 class="text-gray-500 text-2xl font-medium mb-8">Ingeniería, Calidad & IA</h3>
+        <ul class="flex flex-col gap-6">
+          {
+            softSkills.map((skill) => (
+              <li class="flex items-center gap-4">
+                <span class="text-3xl">{skill.emoji}</span>
+                <span class="text-xl md:text-2xl font-bold text-black">
+                  {skill.label}
+                </span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <!-- CTA -->
+    <div class="flex justify-center">
+      <a
+        href="#"
+        class="inline-flex items-center gap-2 bg-blue-500 hover:bg-black transition-colors text-white font-medium text-base md:text-lg px-8 py-3.5 rounded-full shadow-sm"
+      >
+        <svg
+          xmlns="http://www.w3.org/2000/svg"
+          viewBox="0 0 24 24"
+          fill="none"
+          stroke="currentColor"
+          stroke-width="2.2"
+          stroke-linecap="round"
+          stroke-linejoin="round"
+          class="w-5 h-5"
+        >
+          <path d="M12 3v12"></path>
+          <path d="m7 10 5 5 5-5"></path>
+          <path d="M5 21h14"></path>
+        </svg>
+        Descargar CV
+      </a>
+    </div>
+  </div>
+</section>

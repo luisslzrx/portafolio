@@ -1,0 +1,104 @@
+---
+import { getCollection } from "astro:content";
+
+const rawPosts = await getCollection("blog");
+rawPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const posts = rawPosts.slice(0, 3).map((p) => {
+  const dateFormatted = new Intl.DateTimeFormat("es-MX", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(p.data.date);
+
+  return {
+    title: p.data.title,
+    description: p.data.description,
+    image: p.data.image,
+    date: dateFormatted,
+    url: `/blog/${p.slug}`,
+    tag: "Desarrollo Web",
+  };
+});
+---
+
+<section class="w-full bg-white py-20 md:py-28">
+  <div class="w-full">
+    <!-- Header -->
+    <div class="flex flex-col items-center text-center mb-16">
+      <span
+        class="bg-gray-100 text-gray-600 text-sm font-medium px-4 py-1.5 rounded-full mb-6"
+      >
+        Blog
+      </span>
+      <h2
+        class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-black mb-6"
+      >
+        Ideas & Artículos
+      </h2>
+      <p class="text-xl md:text-2xl text-gray-500 max-w-2xl leading-relaxed">
+        Reflexiones y guías sobre desarrollo web, optimización y mejores prácticas.
+      </p>
+    </div>
+
+    <!-- Cards -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+      {
+        posts.map((post) => (
+          <article class="bg-gray-50 rounded-3xl p-4 flex flex-col justify-between">
+            <div>
+              <a href={post.url} class="block rounded-2xl overflow-hidden mb-6 group">
+                <img
+                  src={post.image}
+                  alt={post.title}
+                  class="w-full h-[220px] sm:h-[250px] object-cover group-hover:scale-105 transition-transform duration-500"
+                />
+              </a>
+
+              <div class="px-2 flex flex-col">
+                <div class="flex items-center justify-between mb-4">
+                  <span class="bg-gray-200 text-gray-700 text-xs font-semibold px-3 py-1 rounded-full">
+                    {post.tag}
+                  </span>
+                  <span class="text-gray-500 text-sm capitalize">{post.date}</span>
+                </div>
+
+                <a href={post.url} class="hover:text-blue-600 transition-colors">
+                  <h3 class="text-xl md:text-2xl font-bold text-black mb-3 line-clamp-2">
+                    {post.title}
+                  </h3>
+                </a>
+                <p class="text-gray-500 text-base leading-relaxed line-clamp-3">
+                  {post.description}
+                </p>
+              </div>
+            </div>
+
+            <div class="px-2 pt-6 mt-auto">
+              <a
+                href={post.url}
+                class="inline-flex items-center gap-1.5 text-blue-600 font-semibold hover:text-blue-700 text-sm transition-colors"
+              >
+                Leer artículo
+                <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M5 12h14"></path>
+                  <path d="m12 5 7 7-7 7"></path>
+                </svg>
+              </a>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+
+    <!-- CTA -->
+    <div class="flex justify-center mt-14">
+      <a
+        href="/blog"
+        class="inline-block bg-blue-500 hover:bg-black transition-colors text-white font-medium text-base md:text-lg px-8 py-3.5 rounded-full shadow-sm"
+      >
+        Ver todos los artículos
+      </a>
+    </div>
+  </div>
+</section>

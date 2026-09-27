@@ -1,0 +1,54 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// PrivacyPolicy.astro
+const paragraphs = [
+  "Your privacy is important to me. This Privacy Policy explains how information is collected, used, and protected when you visit this portfolio website.",
+  "This website is intended primarily for showcasing professional work, portfolio projects, and technical articles. No personal information is collected, sold, or shared with third parties for marketing purposes.",
+  "If you choose to contact me via email or social links provided on this site, any information you provide (such as your name, email address, or project details) is used solely to respond to your inquiry and communicate regarding potential collaborations.",
+  "Standard anonymous analytics or hosting logs may record basic technical data such as browser type, device information, and pages viewed to ensure optimal site performance, security, and responsive compatibility.",
+  "This website may contain links to external sites (such as GitHub, LinkedIn, or live project demos). I am not responsible for the privacy practices or content of external websites.",
+  "This policy may be updated periodically to reflect improvements in site functionality or legal requirements. By continuing to use the site, you acknowledge and agree to this policy.",
+];
+---
+
+<Layout
+  title="Privacy Policy | Luis Salazar - Desarrollador Web"
+  description="Privacy policy and data protection principles for Luis Salazar's portfolio."
+  url="https://luissalazar.com.mx/politica-de-privacidad"
+>
+  <main class="w-full bg-white px-6 sm:px-8 md:px-8 pt-32 sm:pt-36 md:pt-44 pb-20 md:pb-28">
+    <div class="w-full max-w-[760px] mx-auto">
+      <!-- Header Centered -->
+      <div class="text-center mb-16 md:mb-20">
+        <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-black tracking-tight leading-tight">
+          Privacy Policy
+        </h1>
+        <p class="text-base sm:text-lg md:text-xl text-gray-500 font-medium mt-4">
+          Last Updated: March 2026
+        </p>
+      </div>
+
+      <!-- Body Paragraphs -->
+      <div class="flex flex-col gap-8 text-left">
+        {
+          paragraphs.map((text) => (
+            <p class="text-lg md:text-xl text-black leading-relaxed font-normal">
+              {text}
+            </p>
+          ))
+        }
+
+        <p class="text-lg md:text-xl text-black leading-relaxed font-normal pt-2">
+          If you have any questions about this Privacy Policy, feel free to contact me at{" "}
+          <a
+            href="mailto:luisgerdx521@gmail.com"
+            class="font-bold text-black hover:text-blue-500 underline underline-offset-4 transition-colors"
+          >
+            luisgerdx521@gmail.com
+          </a>.
+        </p>
+      </div>
+    </div>
+  </main>
+</Layout>

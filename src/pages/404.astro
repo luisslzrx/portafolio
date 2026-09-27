@@ -1,0 +1,42 @@
+---
+import Layout from "../layouts/Layout.astro";
+---
+
+<Layout
+  title="404 - Page Not Found | Luis Salazar - Desarrollador Web"
+  description="The page you're looking for doesn't exist...but creativity still does!"
+  url="https://luissalazar.com.mx/404"
+>
+  <main class="w-full min-h-[85vh] flex items-center justify-center bg-white px-6 sm:px-8 md:px-8 pt-28 pb-20">
+    <div class="w-full max-w-2xl mx-auto flex flex-col items-center text-center">
+      <!-- Dizzy Avatar -->
+      <div class="mb-8 transition-transform hover:scale-105 duration-300">
+        <img
+          src="/luis-salazar-404.png"
+          alt="404 - Page Not Found"
+          class="w-[170px] h-[170px] sm:w-[190px] sm:h-[190px] md:w-[210px] md:h-[210px] object-contain drop-shadow-sm"
+        />
+      </div>
+
+      <!-- Title -->
+      <h1 class="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-black tracking-tight mb-5 leading-tight">
+        404 - Page Not Found
+      </h1>
+
+      <!-- Subtitle Description -->
+      <p class="text-base sm:text-lg md:text-xl text-black font-normal max-w-xl mx-auto mb-8 leading-relaxed">
+        The page you're looking for doesn't exist...but creativity still does! Let's get you back on track.
+      </p>
+
+      <!-- Back to Home Button -->
+      <div>
+        <a
+          href="/"
+          class="inline-flex items-center justify-center bg-blue-500 hover:bg-black transition-colors text-white font-medium text-base sm:text-lg px-8 py-3.5 rounded-full shadow-sm active:scale-95"
+        >
+          Back to Home
+        </a>
+      </div>
+    </div>
+  </main>
+</Layout>

@@ -7,95 +7,311 @@ export async function getStaticPaths() {
 
   return posts.map((post) => ({
     params: { slug: post.slug },
-    props: { post }
+    props: { post },
   }));
 }
 
 const { post } = Astro.props;
-
 const { Content } = await post.render();
+
+const getTag = (slug: string) => {
+  if (slug.includes("portafolio")) return "Portafolio";
+  if (slug.includes("optimizar") || slug.includes("seo")) return "SEO & Rendimiento";
+  if (slug.includes("wordpress")) return "WordPress & Código";
+  if (slug.includes("tecnologias")) return "Tecnologías Web";
+  return "Desarrollo Web";
+};
+
+const tag = getTag(post.slug);
+
+const formattedDate = new Intl.DateTimeFormat("es-MX", {
+  month: "short",
+  day: "numeric",
+  year: "numeric",
+}).format(post.data.date);
+
+// More posts (excluding current post)
+const allPosts = await getCollection("blog");
+allPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+const relatedPosts = allPosts
+  .filter((p) => p.slug !== post.slug)
+  .slice(0, 3)
+  .map((p) => ({
+    title: p.data.title,
+    description: p.data.description,
+    image: p.data.image,
+    date: new Intl.DateTimeFormat("es-MX", {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    }).format(p.data.date),
+    url: `/blog/${p.slug}`,
+    tag: getTag(p.slug),
+  }));
 ---
 
 <Layout
-title={`${post.data.title} | Blog`}
-description={post.data.description}
-url={`https://luissalazar.com.mx/blog/${post.slug}`}
+  title={`${post.data.title} | Blog - Luis Salazar`}
+  description={post.data.description}
+  url={`https://luissalazar.com.mx/blog/${post.slug}`}
 >
+  <main class="w-full bg-white pt-28 md:pt-36 pb-20 md:pb-28">
+    <section class="w-full bg-white px-6 md:px-12 lg:px-20 py-10 md:py-14">
+      <div class="max-w-4xl mx-auto">
+        <!-- Top bar: Back button + tag -->
+        <div class="flex items-center justify-between mb-14">
+          <a
+            href="/blog"
+            class="inline-flex items-center gap-2 bg-blue-500 hover:bg-black transition-colors text-white font-medium text-base px-6 py-2.5 rounded-full shadow-sm"
+          >
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2.5"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              class="w-4 h-4"
+            >
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+            Volver
+          </a>
 
-<section class="pt-32 pb-24 px-6">
+          <span
+            class="bg-gray-100 text-gray-600 text-sm font-medium px-5 py-2 rounded-full"
+          >
+            {tag}
+          </span>
+        </div>
 
-<div class="max-w-6xl mx-auto">
+        <!-- Title block -->
+        <div class="flex flex-col items-center text-center mb-12">
+          <h1
+            class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-black mb-6 tracking-tight leading-tight"
+          >
+            {post.data.title}
+          </h1>
+          <p class="text-lg md:text-xl text-gray-500 leading-relaxed mb-4 max-w-3xl">
+            {post.data.description}
+          </p>
+          <p class="text-base md:text-lg text-gray-400 capitalize font-medium">
+            {formattedDate}
+          </p>
+        </div>
 
-<!-- HERO DEL ARTICULO -->
+        <!-- Featured image -->
+        <div class="rounded-3xl overflow-hidden mb-16 shadow-sm border border-gray-100/80">
+          <img
+            src={post.data.image}
+            alt={post.data.title}
+            class="w-full h-auto max-h-[580px] object-cover"
+          />
+        </div>
 
-<div class="grid md:grid-cols-2 gap-10 items-center mb-16">
+        <!-- Article body -->
+        <article class="blog-article">
+          <Content />
+        </article>
 
-<div class="glass-container overflow-hidden rounded-xl">
-<img 
-src={post.data.image} 
-alt={post.data.title}
-class="w-full h-full object-cover"
-/>
-</div>
+        <!-- Divider -->
+        <hr class="border-gray-200/80 my-16 md:my-24" />
 
-<div>
+        <!-- More Posts Section -->
+        <section class="w-full">
+          <!-- Header -->
+          <div class="flex flex-col items-center text-center mb-12">
+            <span
+              class="bg-gray-100 text-gray-600 text-sm font-medium px-4 py-1.5 rounded-full mb-4"
+            >
+              Blog
+            </span>
+            <h2
+              class="text-3xl md:text-4xl lg:text-5xl font-extrabold text-black mb-4 tracking-tight"
+            >
+              Más Artículos
+            </h2>
+            <p class="text-base sm:text-lg text-gray-500 max-w-xl leading-relaxed">
+              Continúa explorando guías, reflexiones y técnicas sobre desarrollo web.
+            </p>
+          </div>
 
-<h1 class="text-4xl md:text-5xl font-bold mb-6 bg-gradient-to-r from-cyan-400 to-blue-400 bg-clip-text text-transparent">
-{post.data.title}
-</h1>
+          <!-- Cards Grid -->
+          <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+            {
+              relatedPosts.map((item) => (
+                <article class="bg-gray-50 rounded-3xl p-4 flex flex-col justify-between hover:-translate-y-1.5 transition-all duration-300 shadow-sm border border-gray-100">
+                  <div>
+                    <a
+                      href={item.url}
+                      class="block rounded-2xl overflow-hidden mb-5 group"
+                    >
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        class="w-full h-[180px] sm:h-[200px] object-cover group-hover:scale-105 transition-transform duration-500"
+                        loading="lazy"
+                      />
+                    </a>
 
-<p class="text-lg  mb-6">
-{post.data.description}
-</p>
+                    <div class="px-2 flex flex-col">
+                      <div class="flex items-center justify-between mb-3">
+                        <span class="bg-gray-200 text-gray-700 text-xs font-semibold px-3 py-1 rounded-full">
+                          {item.tag}
+                        </span>
+                        <span class="text-gray-400 text-xs font-medium capitalize">
+                          {item.date}
+                        </span>
+                      </div>
 
-<div class="flex gap-4 text-sm ">
+                      <a
+                        href={item.url}
+                        class="hover:text-blue-600 transition-colors"
+                      >
+                        <h3 class="text-lg md:text-xl font-bold text-black mb-2 line-clamp-2 leading-snug">
+                          {item.title}
+                        </h3>
+                      </a>
+                      <p class="text-gray-500 text-sm leading-relaxed line-clamp-2">
+                        {item.description}
+                      </p>
+                    </div>
+                  </div>
 
-<span class="glass-boton px-3 py-1 rounded-full">
-📅 {post.data.date.toLocaleDateString()}
-</span>
+                  <div class="px-2 pt-5 mt-auto">
+                    <a
+                      href={item.url}
+                      class="inline-flex items-center gap-1.5 text-blue-600 font-semibold hover:text-blue-700 text-sm transition-colors"
+                    >
+                      Leer artículo
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        class="w-4 h-4"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                      >
+                        <path d="M5 12h14" />
+                        <path d="m12 5 7 7-7 7" />
+                      </svg>
+                    </a>
+                  </div>
+                </article>
+              ))
+            }
+          </div>
 
-<span class="glass-boton px-3 py-1 rounded-full">
-📖 Lectura 3 min
-</span>
-
-</div>
-
-</div>
-
-</div>
-
-<!-- CONTENIDO + SIDEBAR -->
-
-<div class="grid lg:grid-cols-[1fr_300px] gap-12">
-
-<!-- CONTENIDO -->
-
-<article class="prose prose-invert max-w-none prose-headings:text-cyan-400 prose-a:text-cyan-400 whitespace-pre-line">
-  <Content />
-</article>
-
-<!-- SIDEBAR -->
-
-<aside class="hidden lg:block">
-
-<div class="sticky top-28 glass-container p-6 rounded-xl">
-
-<h3 class="text-lg font-semibold mb-4 text-orange-400">
-Tabla de contenidos
-</h3>
-
-<div class="">
-Por ahora bienvenidos
-</div>
-
-</div>
-
-</aside>
-
-</div>
-
-</div>
-
-</section>
-
+          <!-- CTA to full blog -->
+          <div class="flex justify-center mt-12 md:mt-14">
+            <a
+              href="/blog"
+              class="inline-flex items-center justify-center bg-blue-500 hover:bg-black transition-colors text-white font-medium text-base px-8 py-3.5 rounded-full shadow-sm"
+            >
+              Ver todos los artículos
+            </a>
+          </div>
+        </section>
+      </div>
+    </section>
+  </main>
 </Layout>
+
+<style is:global>
+  .blog-article h2 {
+    font-size: 1.75rem;
+    line-height: 2.25rem;
+    font-weight: 700;
+    color: #000000;
+    margin-top: 3.5rem;
+    margin-bottom: 1.25rem;
+  }
+  @media (min-width: 768px) {
+    .blog-article h2 {
+      font-size: 2rem;
+      line-height: 2.5rem;
+    }
+  }
+  .blog-article h3 {
+    font-size: 1.35rem;
+    line-height: 1.85rem;
+    font-weight: 700;
+    color: #000000;
+    margin-top: 2.5rem;
+    margin-bottom: 1rem;
+  }
+  .blog-article p {
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: #000000;
+    margin-bottom: 1.5rem;
+    font-weight: 400;
+  }
+  @media (min-width: 768px) {
+    .blog-article p {
+      font-size: 1.25rem;
+      line-height: 1.8;
+    }
+  }
+  .blog-article strong {
+    font-weight: 700;
+    color: #000000;
+  }
+  .blog-article ul,
+  .blog-article ol {
+    margin-top: 1rem;
+    margin-bottom: 1.5rem;
+    padding-left: 1.5rem;
+    font-size: 1.125rem;
+    line-height: 1.75;
+    color: #000000;
+  }
+  @media (min-width: 768px) {
+    .blog-article ul,
+    .blog-article ol {
+      font-size: 1.25rem;
+    }
+  }
+  .blog-article ul {
+    list-style-type: disc;
+  }
+  .blog-article ol {
+    list-style-type: decimal;
+  }
+  .blog-article li {
+    margin-bottom: 0.5rem;
+  }
+  .blog-article code {
+    background-color: #f3f4f6;
+    color: #111827;
+    padding: 0.15rem 0.4rem;
+    border-radius: 0.375rem;
+    font-size: 0.9em;
+    font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, monospace;
+  }
+  .blog-article pre {
+    background-color: #111827;
+    color: #f9fafb;
+    padding: 1.25rem;
+    border-radius: 1rem;
+    overflow-x: auto;
+    margin-top: 1.5rem;
+    margin-bottom: 2rem;
+  }
+  .blog-article pre code {
+    background-color: transparent;
+    color: inherit;
+    padding: 0;
+  }
+  .blog-article blockquote {
+    border-left: 4px solid #3b82f6;
+    padding-left: 1.25rem;
+    font-style: italic;
+    color: #4b5563;
+    margin: 2rem 0;
+  }
+</style>

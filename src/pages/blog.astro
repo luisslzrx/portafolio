@@ -1,58 +1,116 @@
 ---
 import Layout from "../layouts/Layout.astro";
 import { getCollection } from "astro:content";
-import PostCard from "../components/PostCard.astro";
 
-const posts = await getCollection("blog");
+const rawPosts = await getCollection("blog");
+rawPosts.sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 
-posts.sort((a, b) => b.data.date - a.data.date);
+const getTag = (slug: string) => {
+  if (slug.includes("portafolio")) return "Portafolio";
+  if (slug.includes("optimizar") || slug.includes("seo")) return "SEO & Rendimiento";
+  if (slug.includes("wordpress")) return "WordPress & Código";
+  if (slug.includes("tecnologias")) return "Tecnologías Web";
+  return "Desarrollo Web";
+};
+
+const posts = rawPosts.map((p) => {
+  const dateFormatted = new Intl.DateTimeFormat("es-MX", {
+    month: "short",
+    day: "numeric",
+    year: "numeric",
+  }).format(p.data.date);
+
+  return {
+    title: p.data.title,
+    description: p.data.description,
+    image: p.data.image,
+    date: dateFormatted,
+    url: `/blog/${p.slug}`,
+    tag: getTag(p.slug),
+  };
+});
 ---
 
 <Layout
-title="Blog de Desarrollo Web | Luis Salazar"
-description="Artículos sobre desarrollo web, Astro, JavaScript, SEO técnico y experiencias construyendo proyectos web."
-url="https://luissalazar.com.mx/blog"
+  title="Blog | Luis Salazar - Desarrollador Web"
+  description="Artículos, reflexiones y guías sobre desarrollo web, optimización y mejores prácticas."
+  url="https://luissalazar.com.mx/blog"
 >
-
-<main class="w-full max-w-[900px] mx-auto px-6 md:px-8 pb-24">
-
-<section class="">
-
-  <!-- Banner -->
-
-
-  <div class="relative w-full min-h-[420px] flex items-center overflow-hidden">
-        <div class="max-w-xl px-4 sm:px-6 lg:px-8">
-        
-        <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold">
-            Mi blog
-        </h1>
-
-        <p class="mt-6 text-base sm:text-lg leading-relaxed">
-            Artículos sobre desarrollo web, Astro, JavaScript, SEO técnico y experiencias construyendo proyectos web
-        </p>
-
+  <main class="w-full max-w-[1200px] mx-auto px-6 sm:px-8 md:px-8 pt-28 md:pt-32 pb-16 md:pb-24">
+    <section class="w-full bg-white">
+      <div class="w-full">
+        <!-- Header -->
+        <div class="flex flex-col items-center text-center mb-16">
+          <span class="bg-gray-100 text-gray-600 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
+            Blog
+          </span>
+          <h1 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-black mb-6">
+            Artículos Destacados
+          </h1>
+          <p class="text-xl md:text-2xl text-gray-500 max-w-2xl leading-relaxed">
+            Reflexiones y guías sobre desarrollo web, optimización y mejores prácticas.
+          </p>
         </div>
-  </div>
 
+        <!-- Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+          {
+            posts.map((post) => (
+              <article class="bg-gray-50 rounded-3xl p-4 flex flex-col justify-between hover:shadow-lg transition-all duration-300 border border-gray-100/80 group">
+                <div>
+                  <a href={post.url} class="block rounded-2xl overflow-hidden mb-6">
+                    <img
+                      src={post.image}
+                      alt={post.title}
+                      class="w-full h-[220px] sm:h-[250px] object-cover group-hover:scale-105 transition-transform duration-500"
+                    />
+                  </a>
 
-  <!-- GRID DE POSTS -->
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                  <div class="px-2 flex flex-col">
+                    <div class="flex items-center justify-between mb-4">
+                      <span class="bg-gray-200 text-gray-700 text-xs font-semibold px-3 py-1 rounded-full">
+                        {post.tag}
+                      </span>
+                      <span class="text-gray-500 text-sm capitalize">{post.date}</span>
+                    </div>
 
-    {posts.map(post => (
-      <PostCard
-        title={post.data.title}
-        description={post.data.description}
-        image={post.data.image}
-        url={`/blog/${post.slug}`}
-        date={post.data.date}
-      />
-    ))}
+                    <a href={post.url} class="hover:text-blue-600 transition-colors">
+                      <h2 class="text-xl md:text-2xl font-bold text-black mb-3 line-clamp-2 leading-snug">
+                        {post.title}
+                      </h2>
+                    </a>
+                    <p class="text-gray-500 text-base leading-relaxed line-clamp-3">
+                      {post.description}
+                    </p>
+                  </div>
+                </div>
 
-  </div>
-
-</section>
-
-</main>
-
+                <div class="px-2 pt-6 mt-auto">
+                  <a
+                    href={post.url}
+                    class="inline-flex items-center gap-1.5 text-blue-600 font-semibold hover:text-blue-700 text-sm transition-colors group/link"
+                  >
+                    Leer artículo
+                    <svg
+                      xmlns="http://www.w3.org/2000/svg"
+                      class="w-4 h-4 group-hover/link:translate-x-1 transition-transform"
+                      viewBox="0 0 24 24"
+                      fill="none"
+                      stroke="currentColor"
+                      stroke-width="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                    >
+                      <path d="M5 12h14" />
+                      <path d="m12 5 7 7-7 7" />
+                    </svg>
+                  </a>
+                </div>
+              </article>
+            ))
+          }
+        </div>
+      </div>
+    </section>
+  </main>
 </Layout>

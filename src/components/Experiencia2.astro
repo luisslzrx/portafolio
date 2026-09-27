@@ -1,0 +1,244 @@
+---
+// FAQ.astro
+const faqs = [
+  {
+    question: "¿En qué tipo de proyectos te especializas?",
+    answer:
+      "Me especializo en desarrollo web full stack y sitios a medida, landing pages de alta conversión, integración de APIs frontend y backend, y soluciones modernas con Astro, WordPress, Tailwind, JavaScript y Python.",
+  },
+  {
+    question: "¿Cuál es tu proceso de trabajo?",
+    answer:
+      "Inicio con el análisis y arquitectura del proyecto, desarrollo componentes limpios y reutilizables, optimizo el rendimiento y SEO técnico, y realizo pruebas antes del despliegue.",
+  },
+  {
+    question: "¿Con qué tecnologías y herramientas trabajas?",
+    answer:
+      "Trabajo principalmente con HTML, CSS, JavaScript, Astro, React, Tailwind CSS y WordPress, además de soporte en backend con Python, Django y PHP según las necesidades del proyecto.",
+  },
+  {
+    question: "¿Cómo aseguras la velocidad y el rendimiento web?",
+    answer:
+      "Aplico estándares modernos de Core Web Vitals, optimización de recursos e imágenes WebP, estructuras semánticas y código optimizado para máxima velocidad de carga.",
+  },
+  {
+    question: "¿Cómo abordas nuevos retos en un proyecto?",
+    answer:
+      "Descompongo el problema en objetivos claros, mantengo comunicación transparente y busco soluciones escalables centradas en la mejor experiencia para el usuario final.",
+  },
+];
+---
+
+<section class="w-full bg-white py-20 md:py-28">
+  <div
+    class="w-full grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-stretch"
+  >
+    <!-- Contenedor Columna Izquierda: alineado en altura con la columna derecha -->
+    <div class="flex flex-col justify-between h-full">
+      <div>
+        <span
+          class="inline-block bg-gray-100 text-gray-600 text-sm font-medium px-4 py-1.5 rounded-full mb-6"
+        >
+          Preguntas Frecuentes
+        </span>
+        <h2
+          class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-black leading-tight mb-6"
+        >
+          ¿Tienes preguntas? ¡Aquí las respuestas!
+        </h2>
+        <p
+          class="text-xl md:text-2xl text-gray-500 leading-relaxed mb-8 max-w-md font-medium"
+        >
+          Respuestas a las dudas más comunes sobre mi experiencia y forma de trabajo.
+        </p>
+      </div>
+
+      <!-- Contenedor de la foto chico y proporcionado, alineado a la base del acordeón -->
+      <div
+        class="relative bg-gray-100 rounded-3xl overflow-hidden flex items-end justify-center w-full h-48 sm:h-52 lg:h-[220px] mt-auto"
+      >
+        <img
+          src="/luis-salazar-saludo.png"
+          alt="Luis Salazar saludando"
+          class="w-full h-full object-contain object-bottom pointer-events-none select-none"
+        />
+      </div>
+    </div>
+
+    <!-- Contenedor Columna Derecha (Tabs / Acordeón) -->
+    <div class="flex flex-col gap-2.5" data-faq-accordion>
+      {
+        faqs.map((faq, index) => {
+          const isOpen = index === 0;
+          return (
+            <div
+              class="bg-gray-100 rounded-3xl px-8 py-5 transition-colors duration-300"
+              data-faq-item
+              data-open={isOpen ? "true" : "false"}
+            >
+              <button
+                type="button"
+                class="group w-full flex items-center justify-between gap-6 text-left cursor-pointer select-none"
+                data-faq-trigger
+                aria-expanded={isOpen ? "true" : "false"}
+              >
+                <span class="text-lg md:text-xl font-medium text-black">
+                  {faq.question}
+                </span>
+                <span
+                  class="shrink-0 w-9 h-9 rounded-full bg-blue-500 group-hover:bg-black transition-colors flex items-center justify-center"
+                  data-faq-icon
+                >
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2.5"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="w-4 h-4 text-white"
+                    data-faq-plus
+                  >
+                    <line x1="12" y1="5" x2="12" y2="19" />
+                    <line x1="5" y1="12" x2="19" y2="12" />
+                  </svg>
+                </span>
+              </button>
+
+              <div
+                class="faq-panel overflow-hidden"
+                data-faq-panel
+                style={isOpen ? "height: auto;" : "height: 0px;"}
+              >
+                <div class="faq-content" data-faq-content>
+                  <p class="text-gray-500 text-base md:text-lg leading-relaxed pt-4 max-w-2xl">
+                    {faq.answer}
+                  </p>
+                </div>
+              </div>
+            </div>
+          );
+        })
+      }
+    </div>
+  </div>
+</section>
+
+<style>
+  .faq-panel {
+    overflow: hidden;
+    transition: height 450ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: height;
+  }
+
+  .faq-content {
+    opacity: 0;
+    transform: translateY(-4px);
+    transition: opacity 350ms cubic-bezier(0.4, 0, 0.2, 1),
+                transform 350ms cubic-bezier(0.4, 0, 0.2, 1);
+    will-change: opacity, transform;
+  }
+
+  [data-faq-item][data-open="true"] .faq-content {
+    opacity: 1;
+    transform: translateY(0);
+  }
+
+  [data-faq-plus] {
+    transition: transform 450ms cubic-bezier(0.4, 0, 0.2, 1);
+    transform-origin: center;
+    will-change: transform;
+  }
+
+  [data-faq-item][data-open="true"] [data-faq-plus] {
+    transform: rotate(45deg);
+  }
+</style>
+
+<script>
+  function initFaqAccordions() {
+    document
+      .querySelectorAll<HTMLElement>("[data-faq-accordion]")
+      .forEach((accordion) => {
+        const items = Array.from(
+          accordion.querySelectorAll<HTMLElement>("[data-faq-item]"),
+        );
+
+        items.forEach((item) => {
+          const trigger = item.querySelector<HTMLElement>("[data-faq-trigger]");
+          const panel = item.querySelector<HTMLElement>("[data-faq-panel]");
+
+          // Inicializar estado del primer panel abierto
+          if (item.getAttribute("data-open") === "true" && panel) {
+            panel.style.height = "auto";
+          } else if (panel) {
+            panel.style.height = "0px";
+          }
+
+          trigger?.addEventListener("click", () => {
+            const isOpen = item.getAttribute("data-open") === "true";
+
+            // Función para cerrar un panel con transición fluida
+            const closeItem = (targetItem: HTMLElement) => {
+              targetItem.setAttribute("data-open", "false");
+              const tTrigger = targetItem.querySelector<HTMLElement>("[data-faq-trigger]");
+              const tPanel = targetItem.querySelector<HTMLElement>("[data-faq-panel]");
+              if (tTrigger) tTrigger.setAttribute("aria-expanded", "false");
+
+              if (tPanel) {
+                tPanel.style.height = tPanel.scrollHeight + "px";
+                void tPanel.offsetHeight;
+                tPanel.style.height = "0px";
+              }
+            };
+
+            // Función para abrir un panel con transición fluida
+            const openItem = (targetItem: HTMLElement) => {
+              targetItem.setAttribute("data-open", "true");
+              const tTrigger = targetItem.querySelector<HTMLElement>("[data-faq-trigger]");
+              const tPanel = targetItem.querySelector<HTMLElement>("[data-faq-panel]");
+              if (tTrigger) tTrigger.setAttribute("aria-expanded", "true");
+
+              if (tPanel) {
+                tPanel.style.height = "0px";
+                void tPanel.offsetHeight;
+                tPanel.style.height = tPanel.scrollHeight + "px";
+
+                const onEnd = (e: TransitionEvent) => {
+                  if (e.propertyName === "height") {
+                    if (targetItem.getAttribute("data-open") === "true") {
+                      tPanel.style.height = "auto";
+                    }
+                    tPanel.removeEventListener("transitionend", onEnd);
+                  }
+                };
+                tPanel.addEventListener("transitionend", onEnd);
+              }
+            };
+
+            // Cerrar cualquier otro abierto simultáneamente
+            items.forEach((other) => {
+              if (other !== item && other.getAttribute("data-open") === "true") {
+                closeItem(other);
+              }
+            });
+
+            // Si el actual estaba abierto, cerrarlo; si estaba cerrado, abrirlo
+            if (isOpen) {
+              closeItem(item);
+            } else {
+              openItem(item);
+            }
+          });
+        });
+      });
+  }
+
+  if (document.readyState === "loading") {
+    document.addEventListener("DOMContentLoaded", initFaqAccordions);
+  } else {
+    initFaqAccordions();
+  }
+  document.addEventListener("astro:page-load", initFaqAccordions);
+</script>

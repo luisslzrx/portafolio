@@ -1,0 +1,53 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+// TermsAndConditions.astro
+const paragraphs = [
+  "By using this website, you agree to the following terms and conditions. If you do not agree with any part of these terms, please refrain from using the site.",
+  "All content on this website—including images, designs, text, branding, and layout—is my intellectual property and is protected by copyright laws. You may not reproduce, copy, modify, or distribute any part of this site without my written permission.",
+  "Any templates, assets, or downloadable files I offer are provided as-is. While I've created them with care and attention to detail, I cannot guarantee they will meet your specific needs or function perfectly in all scenarios. I am not liable for any damages, losses, or issues that may arise from the use of this website, its content, or any associated files or templates.",
+  "If you purchase and use any templates or assets I provide, you are solely responsible for how you customize, implement, and publish them. Any content you add—whether text, media, or data—is your responsibility. I am not responsible for how your final website appears or is interpreted by others.",
+  "These terms may be updated periodically. By continuing to use the website after changes are made, you agree to the revised terms.",
+];
+---
+
+<Layout
+  title="Terms & Conditions | Luis Salazar - Desarrollador Web"
+  description="Terms and conditions for Luis Salazar's portfolio and web development services."
+  url="https://luissalazar.com.mx/terminos-y-condiciones"
+>
+  <main class="w-full bg-white px-6 sm:px-8 md:px-8 pt-32 sm:pt-36 md:pt-44 pb-20 md:pb-28">
+    <div class="w-full max-w-[760px] mx-auto">
+      <!-- Header Centered -->
+      <div class="text-center mb-16 md:mb-20">
+        <h1 class="text-5xl sm:text-6xl md:text-7xl font-extrabold text-black tracking-tight leading-tight">
+          Terms &amp; Conditions
+        </h1>
+        <p class="text-base sm:text-lg md:text-xl text-gray-500 font-medium mt-4">
+          Last Updated: March 2026
+        </p>
+      </div>
+
+      <!-- Body Paragraphs -->
+      <div class="flex flex-col gap-8 text-left">
+        {
+          paragraphs.map((text) => (
+            <p class="text-lg md:text-xl text-black leading-relaxed font-normal">
+              {text}
+            </p>
+          ))
+        }
+
+        <p class="text-lg md:text-xl text-black leading-relaxed font-normal pt-2">
+          If you have any questions or concerns, feel free to contact me at{" "}
+          <a
+            href="mailto:luisgerdx521@gmail.com"
+            class="font-bold text-black hover:text-blue-500 underline underline-offset-4 transition-colors"
+          >
+            luisgerdx521@gmail.com
+          </a>.
+        </p>
+      </div>
+    </div>
+  </main>
+</Layout>

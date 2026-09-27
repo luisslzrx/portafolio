@@ -1,0 +1,181 @@
+---
+// Certifications.astro
+const certificates = [
+  {
+    title: "Fundamentals of Digital Marketing",
+    issuer: "Google",
+    date: "Emitido Sep 2025",
+    image: "/certificado-marketing-google.png",
+  },
+  {
+    title: "Diplomado Full Stack",
+    issuer: "Fundación Carlos Slim",
+    date: "Emitido Oct 2025",
+    image: "/certificado-full-stack.png",
+  },
+  {
+    title: "Desarrollo de sitios web y aplicaciones móviles",
+    issuer: "Fundación Carlos Slim",
+    date: "En proceso",
+    image: "/certificado-en-proceso.svg",
+    inProgress: true,
+  },
+];
+---
+
+<section class="w-full bg-white px-6 md:px-12 lg:px-20 py-20 md:py-28">
+  <div class="max-w-6xl mx-auto">
+    <!-- Header -->
+    <div class="flex flex-col items-center text-center mb-16">
+      <span
+        class="bg-gray-100 text-gray-600 text-sm font-medium px-4 py-1.5 rounded-full mb-6"
+      >
+        Certificaciones
+      </span>
+      <h2
+        class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-black mb-6"
+      >
+        Acreditaciones &amp; Certificados
+      </h2>
+      <p
+        class="text-lg md:text-xl text-gray-500 max-w-2xl leading-relaxed font-medium"
+      >
+        Credenciales que respaldan mi formación técnica, buenas prácticas y aprendizaje continuo.
+      </p>
+    </div>
+
+    <!-- Cards -->
+    <div
+      data-cert-container
+      class="flex md:grid md:grid-cols-3 gap-6 overflow-x-auto md:overflow-visible snap-x snap-mandatory py-2 no-scrollbar scroll-smooth"
+    >
+      {
+        certificates.map((cert) => (
+          <div
+            data-cert-card
+            class="shrink-0 md:shrink w-[85%] sm:w-[80%] md:w-auto snap-center bg-gray-100 rounded-3xl p-4 flex flex-col justify-between"
+          >
+            <div class="rounded-2xl overflow-hidden mb-6 bg-white border border-gray-200/50 shadow-xs">
+              <img
+                src={cert.image}
+                alt={cert.title}
+                class="w-full h-[220px] object-cover bg-white"
+              />
+            </div>
+
+            <div class="px-2 flex-1 flex flex-col">
+              <h3 class="text-xl md:text-2xl font-bold text-black mb-2 leading-snug line-clamp-3 min-h-[3.5rem] md:min-h-[4rem]">
+                {cert.title}
+              </h3>
+              <p class="text-gray-500 text-base mb-1">{cert.issuer}</p>
+              <div class="mt-auto pt-6 flex items-center">
+                <span
+                  class={
+                    cert.inProgress
+                      ? "inline-flex items-center gap-1.5 text-blue-600 font-semibold text-sm bg-blue-50 px-3 py-1 rounded-full"
+                      : "text-gray-400 text-sm"
+                  }
+                >
+                  {cert.inProgress && (
+                    <span class="w-2 h-2 rounded-full bg-blue-500 animate-pulse" />
+                  )}
+                  {cert.date}
+                </span>
+              </div>
+            </div>
+          </div>
+        ))
+      }
+    </div>
+
+    <!-- Mobile Dots indicator (hidden on desktop, visible on mobile) -->
+    <div class="flex md:hidden justify-center items-center mt-6">
+      <div
+        class="inline-flex items-center gap-2 bg-[#D1D5DB] px-3.5 py-1.5 rounded-full shadow-inner"
+        data-cert-dots
+      >
+        {
+          certificates.map((_, idx) => (
+            <button
+              type="button"
+              data-cert-dot={idx}
+              class={`w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer ${
+                idx === 0 ? "bg-white scale-110 shadow-sm" : "bg-white/45"
+              }`}
+              aria-label={`Ir al certificado ${idx + 1}`}
+            />
+          ))
+        }
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  .no-scrollbar::-webkit-scrollbar {
+    display: none;
+  }
+  .no-scrollbar {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+</style>
+
+<script>
+  function initCertCarousel() {
+    const container = document.querySelector<HTMLElement>('[data-cert-container]');
+    const dotsContainer = document.querySelector<HTMLElement>('[data-cert-dots]');
+    if (!container || !dotsContainer) return;
+
+    if ((container as any)._certInit) return;
+    (container as any)._certInit = true;
+
+    const cards = Array.from(container.querySelectorAll<HTMLElement>('[data-cert-card]'));
+    const dots = Array.from(dotsContainer.querySelectorAll<HTMLElement>('[data-cert-dot]'));
+
+    function updateActiveDot() {
+      if (cards.length === 0 || dots.length === 0) return;
+      const containerCenter = container.scrollLeft + container.clientWidth / 2;
+      let closestIndex = 0;
+      let closestDist = Infinity;
+
+      cards.forEach((card, idx) => {
+        const cardCenter = card.offsetLeft + card.offsetWidth / 2;
+        const dist = Math.abs(containerCenter - cardCenter);
+        if (dist < closestDist) {
+          closestDist = dist;
+          closestIndex = idx;
+        }
+      });
+
+      dots.forEach((dot, idx) => {
+        if (idx === closestIndex) {
+          dot.className =
+            'w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer bg-white scale-110 shadow-sm';
+        } else {
+          dot.className =
+            'w-2.5 h-2.5 rounded-full transition-all duration-300 cursor-pointer bg-white/45';
+        }
+      });
+    }
+
+    dots.forEach((dot, idx) => {
+      dot.addEventListener('click', () => {
+        const card = cards[idx];
+        if (card) {
+          card.scrollIntoView({ behavior: 'smooth', inline: 'center', block: 'nearest' });
+        }
+      });
+    });
+
+    container.addEventListener('scroll', updateActiveDot, { passive: true });
+    updateActiveDot();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initCertCarousel);
+  } else {
+    initCertCarousel();
+  }
+  document.addEventListener('astro:page-load', initCertCarousel);
+</script>

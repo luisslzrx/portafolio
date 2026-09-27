@@ -1,0 +1,248 @@
+---
+// WhyWorkWithMe.astro
+import HtmlIcon from "./icons/html-icon.astro";
+import CssIcon from "./icons/css-icon.astro";
+import JsIcon from "./icons/javascript-icon.astro";
+import AstroIcon from "./icons/astro-icon.astro";
+import TailwindIcon from "./icons/tailwind-icon.astro";
+import ReactIcon from "./icons/react-icon.astro";
+import VueIcon from "./icons/vue-icon.astro";
+import PythonIcon from "./icons/python-icon.astro";
+import DjangoIcon from "./icons/django-icon.astro";
+import PhpIcon from "./icons/php-icon.astro";
+import WordpressIcon from "./icons/wordpress-icon.astro";
+import ElementorIcon from "./icons/elementor-icon.astro";
+import SqlIcon from "./icons/sql-icon.astro";
+import GitIcon from "./icons/git-icon.astro";
+import GitHubIcon from "./icons/GitHub-icon.astro";
+import OpenAiIcon from "./icons/openai-icon.astro";
+
+const row1 = [
+  { name: "React", Icon: ReactIcon },
+  { name: "Astro", Icon: AstroIcon },
+  { name: "Tailwind CSS", Icon: TailwindIcon },
+  { name: "JavaScript", Icon: JsIcon },
+  { name: "HTML5", Icon: HtmlIcon },
+  { name: "CSS3", Icon: CssIcon },
+  { name: "Vue.js", Icon: VueIcon },
+  { name: "Python", Icon: PythonIcon },
+];
+
+const row2 = [
+  { name: "Django", Icon: DjangoIcon },
+  { name: "PHP", Icon: PhpIcon },
+  { name: "WordPress", Icon: WordpressIcon },
+  { name: "Elementor", Icon: ElementorIcon },
+  { name: "SQL", Icon: SqlIcon },
+  { name: "Git", Icon: GitIcon },
+  { name: "GitHub", Icon: GitHubIcon },
+  { name: "OpenAI", Icon: OpenAiIcon },
+];
+
+const stats = [
+  { value: "+25", label: "Proyectos Exitosos" },
+  { value: "+100k", label: "Usuarios Impactados" },
+];
+---
+
+<section class="w-full bg-white py-20 md:py-28">
+  <div class="w-full">
+    <!-- Header -->
+    <div class="flex flex-col items-center text-center mb-16">
+      <span
+        class="bg-gray-100 text-gray-600 text-sm font-medium px-4 py-1.5 rounded-full mb-6"
+      >
+        Beneficios
+      </span>
+      <h2
+        class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-black mb-6"
+      >
+        ¿Por qué trabajar conmigo?
+      </h2>
+      <p
+        class="text-xl md:text-2xl text-gray-500 max-w-2xl leading-relaxed font-medium"
+      >
+        Experiencia sólida, enfoque estratégico y pasión por los resultados.
+      </p>
+    </div>
+
+    <!-- Bento grid -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+      <!-- Card 1: experience -->
+      <div
+        class="bg-gray-100 rounded-3xl p-8 flex flex-col justify-between items-center text-center min-h-[420px]"
+      >
+        <h3 class="text-3xl sm:text-3xl md:text-4xl font-bold text-black leading-snug">
+          <span class="text-gray-500 font-semibold">Más de</span> 5+ años <span
+            class="text-gray-500 font-semibold">de</span
+          > experiencia
+        </h3>
+        <div class="flex justify-center items-end flex-1 mt-6">
+          <img
+            src="/luis-salazar-orando.png"
+            alt="Luis Salazar - Experiencia"
+            class="h-full max-h-[280px] w-auto object-contain object-bottom"
+          />
+        </div>
+      </div>
+
+      <!-- Card 2: tools -->
+      <div
+        class="group/tools bg-gray-100 rounded-3xl p-8 flex flex-col justify-between items-center text-center min-h-[420px] overflow-hidden"
+      >
+        <div
+          class="relative w-full flex-1 flex flex-col justify-center gap-3 md:gap-4 overflow-hidden py-2 [mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)] [-webkit-mask-image:linear-gradient(to_right,transparent,black_10%,black_90%,transparent)]"
+        >
+          <!-- Row 1: moving left -->
+          <div class="flex gap-3 animate-marquee-left">
+            {
+              [...row1, ...row1].map((item) => (
+                <div
+                  title={item.name}
+                  class="w-[52px] h-[52px] md:w-[60px] md:h-[60px] rounded-2xl bg-white shadow-sm flex items-center justify-center p-2.5 md:p-3 border border-gray-200/70 flex-shrink-0 transition-transform duration-200 hover:scale-110"
+                >
+                  <item.Icon class="w-7 h-7 md:w-8 md:h-8 object-contain" />
+                </div>
+              ))
+            }
+          </div>
+
+          <!-- Row 2: moving right -->
+          <div class="flex gap-3 animate-marquee-right">
+            {
+              [...row2, ...row2].map((item) => (
+                <div
+                  title={item.name}
+                  class="w-[52px] h-[52px] md:w-[60px] md:h-[60px] rounded-2xl bg-white shadow-sm flex items-center justify-center p-2.5 md:p-3 border border-gray-200/70 flex-shrink-0 transition-transform duration-200 hover:scale-110"
+                >
+                  <item.Icon class="w-7 h-7 md:w-8 md:h-8 object-contain" />
+                </div>
+              ))
+            }
+          </div>
+        </div>
+
+        <h3 class="text-3xl sm:text-3xl md:text-4xl font-bold text-black leading-snug mt-6 text-center">
+          <span class="text-gray-500 font-semibold">Dominio de</span> herramientas modernas <span class="text-black">web</span>
+        </h3>
+      </div>
+
+      <!-- Card 3: teams -->
+      <div
+        class="bg-gray-100 rounded-3xl p-8 flex flex-col justify-between items-center text-center min-h-[420px]"
+      >
+        <h3 class="text-3xl sm:text-3xl md:text-4xl font-bold text-black leading-snug">
+          <span class="text-gray-500 font-semibold">Colaboración en</span> equipos ágiles de <span class="text-black">producto</span>
+        </h3>
+        <div class="flex justify-center items-end flex-1 mt-6">
+          <img
+            src="/luis-salazar-computadora.png"
+            alt="Luis Salazar - Trabajo en equipo"
+            class="h-full max-h-[260px] w-auto object-contain object-bottom"
+          />
+        </div>
+      </div>
+    </div>
+
+    <!-- Bottom row -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      <!-- Card 4: solves problems -->
+      <div class="bg-gray-100 rounded-3xl p-8 flex flex-col items-center text-center min-h-[420px]">
+        <h3 class="text-3xl sm:text-3xl md:text-4xl font-bold leading-snug mb-6">
+          <span class="text-black">Resuelvo problemas</span>
+          <span class="text-gray-500 font-semibold">mediante</span>
+          <span class="text-black">código y diseño</span>
+        </h3>
+        <div class="flex-1 flex items-end justify-center">
+          <img
+            src="/luis-salazar-saludo.png"
+            alt="Luis Salazar - Código y diseño"
+            class="h-full max-h-[280px] w-auto object-contain object-bottom"
+          />
+        </div>
+      </div>
+
+      <!-- Card 5: milestones -->
+      <div class="bg-gray-100 rounded-3xl p-8 flex flex-col items-center text-center min-h-[420px]">
+        <h3 class="text-3xl sm:text-3xl md:text-4xl font-bold leading-snug mb-6 text-center">
+          <span class="text-gray-500 font-semibold">Transformando</span>
+          <span class="text-black">ideas</span>
+          <span class="text-gray-500 font-semibold">en</span>
+          <span class="text-black">resultados</span>
+        </h3>
+
+        <div class="flex-1 w-full flex flex-col sm:flex-row items-center sm:items-end justify-center sm:justify-between gap-6 sm:gap-4">
+          <img
+            src="/luis-salazar-idea.png"
+            alt="Luis Salazar - Ideas en resultados"
+            class="h-full max-h-[280px] w-auto object-contain object-bottom"
+          />
+
+          <div class="flex flex-col gap-4 flex-1 max-w-[220px]">
+            {
+              stats.map((stat) => (
+                <div class="bg-gray-200 rounded-2xl px-6 py-5 flex flex-col items-center text-center">
+                  <div class="flex gap-1 mb-2 text-amber-400">
+                    {Array.from({ length: 5 }).map(() => (
+                      <svg
+                        xmlns="http://www.w3.org/2000/svg"
+                        viewBox="0 0 20 20"
+                        fill="currentColor"
+                        class="w-4 h-4"
+                      >
+                        <path d="M10 1.5l2.6 5.27 5.82.85-4.21 4.1 1 5.8L10 14.9l-5.21 2.62 1-5.8-4.21-4.1 5.82-.85L10 1.5z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <p class="text-2xl md:text-3xl font-extrabold text-black">
+                    {stat.value}
+                  </p>
+                  <p class="text-gray-500 text-sm md:text-base mt-1">
+                    {stat.label}
+                  </p>
+                </div>
+              ))
+            }
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<style>
+  @keyframes marqueeLeft {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
+
+  @keyframes marqueeRight {
+    0% {
+      transform: translateX(-50%);
+    }
+    100% {
+      transform: translateX(0);
+    }
+  }
+
+  .animate-marquee-left {
+    display: flex;
+    width: max-content;
+    animation: marqueeLeft 22s linear infinite;
+  }
+
+  .animate-marquee-right {
+    display: flex;
+    width: max-content;
+    animation: marqueeRight 22s linear infinite;
+  }
+
+  .group\/tools:hover .animate-marquee-left,
+  .group\/tools:hover .animate-marquee-right {
+    animation-play-state: paused;
+  }
+</style>

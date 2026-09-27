@@ -1,0 +1,95 @@
+---
+// WorkHistory.astro
+const jobs = [
+  {
+    company: "Digitalrocks",
+    role: "Programador Web",
+    period: "08/2025 – Presente • Ciudad de México",
+    badge: "DR",
+    badgeBg: "bg-blue-600 text-white",
+    description:
+      "Desarrollo y optimización de sitios corporativos y e-commerce de alto rendimiento utilizando HTML, CSS, JavaScript, WordPress y WooCommerce. Implementación de interfaces responsive centradas en UX, despliegues en servidores, configuración de DNS/hosting, migraciones técnicas y control de versiones con Git/GitHub.",
+  },
+  {
+    company: "Outlier",
+    role: "Desarrollador Freelance Remoto",
+    period: "2024 – 2025 • Remoto",
+    badge: "OL",
+    badgeBg: "bg-purple-600 text-white",
+    description:
+      "Análisis, optimización y evaluación técnica de software en Python, JavaScript, React y C orientado al entrenamiento y alineación de LLMs. Aplicación de prompt engineering avanzado, depuración rigurosa, verificación de lógica funcional y aseguramiento de estándares de calidad de código.",
+  },
+  {
+    company: "Centro de Estudios Las Américas",
+    role: "Maestro de Informática y Programación",
+    period: "Junio 2023 – Junio 2025",
+    badge: "CLA",
+    badgeBg: "bg-emerald-600 text-white",
+    description:
+      "Impartición de programas prácticos en ingeniería web y lógica algorítmica, abarcando JavaScript moderno, Astro, Vue.js, HTML5 semántico y CSS avanzado (Grid y Flexbox). Instrucción en flujos de trabajo profesionales con Git/GitHub, arquitectura de componentes dinámicos y buenas prácticas de desarrollo.",
+  },
+  {
+    company: "Universidad Veracruzana",
+    role: "Ingeniería en Instrumentación Electrónica",
+    period: "2017 – 2022",
+    badge: "UV",
+    badgeBg: "bg-blue-800 text-white",
+    description:
+      "Formación integral en instrumentación tecnológica, control y sistemas electrónicos. Desarrollo de fundamentos sólidos en pensamiento computacional, programación estructurada y resolución analítica de problemas técnicos complejos aplicados a proyectos digitales.",
+  },
+];
+---
+<section class="w-full bg-white py-20 md:py-28">
+  <div class="w-full">
+
+    <!-- Header -->
+    <div class="flex flex-col items-center text-center mb-16">
+      <span class="bg-gray-100 text-gray-600 text-sm font-medium px-4 py-1.5 rounded-full mb-6">
+        Experiencia
+      </span>
+      <h2 class="text-4xl md:text-5xl lg:text-6xl font-extrabold text-black mb-6">
+        Mi Trayectoria
+      </h2>
+      <p class="text-xl md:text-2xl text-gray-500 max-w-2xl leading-relaxed font-medium">
+        Un vistazo a los roles, proyectos y formación que han forjado mi experiencia profesional.
+      </p>
+    </div>
+
+    <!-- Sub-heading -->
+    <h3 class="text-3xl md:text-4xl font-bold text-black mb-8 text-center">
+      Historial Laboral y Formación
+    </h3>
+
+    <!-- Job cards -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+      {jobs.map((job) => (
+        <div class="bg-gray-100 rounded-3xl p-8 md:p-10 flex flex-col justify-between hover:shadow-md transition-shadow">
+          <div>
+            <!-- Header: badge + info -->
+            <div class="flex items-start gap-5 mb-6">
+              <div class={`w-16 h-16 rounded-2xl flex items-center justify-center shrink-0 font-bold text-xl shadow-sm ${job.badgeBg}`}>
+                {job.badge}
+              </div>
+              <div class="flex flex-col">
+                <h4 class="text-2xl md:text-3xl font-bold text-black">
+                  {job.company}
+                </h4>
+                <p class="text-lg md:text-xl font-normal text-black mt-0.5">
+                  {job.role}
+                </p>
+                <p class="text-gray-500 text-base md:text-lg mt-0.5 font-normal">
+                  {job.period}
+                </p>
+              </div>
+            </div>
+
+            <!-- Description paragraph -->
+            <p class="text-gray-600 text-base md:text-lg leading-relaxed">
+              {job.description}
+            </p>
+          </div>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>

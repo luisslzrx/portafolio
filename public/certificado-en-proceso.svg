@@ -1,0 +1,43 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 700 500" width="700" height="500">
+  <defs>
+    <linearGradient id="bgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#F9FAFB" />
+      <stop offset="100%" stop-color="#F3F4F6" />
+    </linearGradient>
+    <linearGradient id="badgeGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#04ADEE" />
+      <stop offset="100%" stop-color="#0CCB97" />
+    </linearGradient>
+  </defs>
+
+  <!-- Background Card -->
+  <rect width="700" height="500" rx="24" fill="url(#bgGrad)" />
+  <rect x="24" y="24" width="652" height="452" rx="18" fill="none" stroke="#E5E7EB" stroke-width="2" stroke-dasharray="8 8" />
+
+  <!-- Center Icon Backdrop -->
+  <g transform="translate(350, 195)">
+    <circle cx="0" cy="0" r="56" fill="#FFFFFF" filter="drop-shadow(0 6px 16px rgba(0,0,0,0.05))" />
+    <!-- Certificate with timer badge -->
+    <rect x="-24" y="-28" width="48" height="56" rx="6" fill="none" stroke="#04ADEE" stroke-width="3.5" />
+    <line x1="-14" y1="-14" x2="14" y2="-14" stroke="#D1D5DB" stroke-width="3" stroke-linecap="round" />
+    <line x1="-14" y1="-4" x2="6" y2="-4" stroke="#D1D5DB" stroke-width="3" stroke-linecap="round" />
+    <circle cx="16" cy="18" r="14" fill="#0CCB97" />
+    <polyline points="12,18 15,21 21,15" fill="none" stroke="#FFFFFF" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" />
+  </g>
+
+  <!-- En Proceso Pill Badge -->
+  <g transform="translate(350, 305)">
+    <rect x="-85" y="-19" width="170" height="38" rx="19" fill="url(#badgeGrad)" />
+    <text x="0" y="6" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle" letter-spacing="0.8">
+      EN PROCESO
+    </text>
+  </g>
+
+  <!-- Institution & Status Details -->
+  <text x="350" y="375" font-family="system-ui, -apple-system, sans-serif" font-size="20" font-weight="700" fill="#111827" text-anchor="middle">
+    Fundación Carlos Slim
+  </text>
+  <text x="350" y="405" font-family="system-ui, -apple-system, sans-serif" font-size="15" font-weight="500" fill="#6B7280" text-anchor="middle">
+    Desarrollo Web y Apps Móviles • En curso
+  </text>
+</svg>

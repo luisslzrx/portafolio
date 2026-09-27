@@ -1,0 +1,22 @@
+---
+import Layout from "../layouts/Layout.astro";
+import Presentacion from "../components/AcercaDeMi/Presentacion.astro";
+import Habilidades from "../components/AcercaDeMi/Habilidades.astro";
+import Habilidades2 from "../components/AcercaDeMi/Habilidades2.astro";
+import Experiencias from "../components/AcercaDeMi/Experiencias.astro";
+import Style from "../components/AcercaDeMi/Style.astro";
+---
+
+<Layout
+  title="Acerca de mí | Luis Salazar - Desarrollador Web"
+  description="Conoce más sobre mi trayectoria, filosofía de diseño, habilidades técnicas y experiencia en desarrollo web."
+  url="https://luissalazar.com.mx/acerca-de-mi"
+>
+  <main class="w-full max-w-[1200px] mx-auto px-6 sm:px-8 md:px-8 pt-20 md:pt-24 pb-20">
+    <Presentacion />
+    <Experiencias />
+    <Habilidades />
+    <Habilidades2 />
+    <Style />
+  </main>
+</Layout>

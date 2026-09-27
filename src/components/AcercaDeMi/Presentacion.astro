@@ -1,0 +1,45 @@
+---
+// Presentacion.astro
+---
+
+<section
+  class="w-full bg-white pt-0 pb-16 md:pb-20 flex flex-col items-center"
+>
+  <div class="w-full max-w-3xl mx-auto flex flex-col items-center text-center">
+    <!-- Profile photo -->
+    <div
+      class="w-56 h-56 md:w-64 md:h-64 rounded-full overflow-hidden mb-8 border-4 border-gray-100 shadow-sm"
+    >
+      <img
+        src="/foto-luis.png"
+        alt="Luis Salazar"
+        class="w-full h-full object-cover object-top"
+      />
+    </div>
+
+    <!-- Badge -->
+    <span
+      class="bg-gray-100 text-gray-600 text-sm font-medium px-5 py-2 rounded-full mb-6"
+    >
+      Sobre mí
+    </span>
+
+    <!-- Name -->
+    <h1 class="text-5xl md:text-6xl lg:text-7xl font-extrabold text-black mb-6">
+      Luis Salazar
+    </h1>
+
+    <!-- Description -->
+    <p class="text-xl md:text-2xl text-gray-600 leading-relaxed max-w-2xl mb-8">
+      Soy un desarrollador web Full Stack enfocado en construir soluciones completas, integrando frontend moderno y backend escalable con buenas prácticas de código, rendimiento y diseño centrado en las personas.
+    </p>
+
+    <!-- CTA -->
+    <a
+      href="/proyectos"
+      class="inline-block bg-blue-500 hover:bg-black transition-colors text-white font-medium text-base md:text-lg px-8 py-3.5 rounded-full shadow-sm"
+    >
+      Ver mi portafolio
+    </a>
+  </div>
+</section>

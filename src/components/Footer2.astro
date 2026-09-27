@@ -1,0 +1,135 @@
+---
+// Footer2.astro
+const pages = [
+  { name: "Inicio", href: "/" },
+  { name: "Portafolio", href: "/proyectos" },
+  { name: "Acerca de mí", href: "/acerca-de-mi" },
+  { name: "Blog", href: "/blog" },
+];
+
+const info = [
+  { name: "Términos y condiciones", href: "/terminos-y-condiciones" },
+  { name: "Política de privacidad", href: "/politica-de-privacidad" },
+  { name: "luisgerdx521@gmail.com", href: "mailto:luisgerdx521@gmail.com" },
+  { name: "WhatsApp: 228 853 5112", href: "https://wa.me/522288535112", target: "_blank" },
+];
+
+const socials = [
+  { name: "LinkedIn", href: "https://www.linkedin.com/in/luis-gerardo-salazar-aguilar/" },
+  { name: "GitHub", href: "https://github.com/luisslzrx" },
+];
+---
+<section id="contacto" class="w-full bg-white px-6 sm:px-8 md:px-8 py-10">
+  <div class="max-w-[1200px] mx-auto flex flex-col gap-6">
+
+    <!-- Lets Connect CTA -->
+    <div class="relative bg-gray-100 rounded-3xl px-8 md:px-16 py-14 md:py-20 overflow-hidden flex items-center">
+      <div class="relative z-10 max-w-lg">
+        <h2 class="text-4xl md:text-6xl font-extrabold text-black mb-6">
+          Conectemos
+        </h2>
+        <p class="text-xl md:text-2xl text-black leading-relaxed mb-8">
+          Siempre estoy abierto a nuevas oportunidades, proyectos interesantes o simplemente una buena conversación sobre tecnología.
+        </p>
+        <a
+          href="mailto:luisgerdx521@gmail.com"
+          class="inline-block bg-blue-500 hover:bg-black transition-colors text-white font-medium text-base md:text-lg px-8 py-3.5 rounded-full shadow-sm"
+        >
+          Contáctame
+        </a>
+      </div>
+
+      <!-- Character image -->
+      <!-- 👇 AQUÍ SE CAMBIA EL TAMAÑO DE LA FOTO DEL CONTACTO: ajusta max-h-[...] y h-[...] -->
+      <img
+        src="/luis-salazar-contacto.png"
+        alt="Luis Salazar"
+        class="hidden md:block absolute right-0 md:right-4 lg:right-16 bottom-0 h-[100%] max-h-[420px] w-auto object-contain object-bottom pointer-events-none select-none"
+      />
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-100 rounded-3xl px-8 md:px-16 py-14 md:py-16">
+      <div class="flex flex-col md:flex-row md:justify-between gap-12">
+        <!-- Brand + socials -->
+        <div class="flex flex-col gap-6">
+          <h3 class="text-4xl md:text-5xl font-extrabold footer-gradient-text">
+            Luis Salazar
+          </h3>
+          <div class="flex items-center gap-4">
+            {socials.map((social) => (
+              <a
+                href={social.href}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={social.name}
+                class="w-11 h-11 rounded-full bg-gray-200 hover:bg-gray-300 transition-colors flex items-center justify-center text-black"
+              >
+                {social.name === "LinkedIn" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor">
+                    <path d="M20.45 20.45h-3.55v-5.57c0-1.33-.02-3.04-1.85-3.04-1.85 0-2.14 1.45-2.14 2.94v5.67H9.36V9h3.41v1.56h.05c.48-.9 1.64-1.85 3.37-1.85 3.6 0 4.27 2.37 4.27 5.46v6.28zM5.34 7.43a2.06 2.06 0 1 1 0-4.12 2.06 2.06 0 0 1 0 4.12zM7.11 20.45H3.56V9h3.55v11.45z"/>
+                  </svg>
+                )}
+                {social.name === "GitHub" && (
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="w-5 h-5" fill="currentColor">
+                    <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
+                  </svg>
+                )}
+              </a>
+            ))}
+          </div>
+        </div>
+
+        <!-- Links -->
+        <div class="flex gap-16 md:gap-24">
+          <div class="flex flex-col gap-4">
+            <h4 class="font-bold text-black text-lg">Páginas</h4>
+            {pages.map((page) => (
+              <a href={page.href} class="text-gray-500 hover:text-black transition-colors text-base">
+                {page.name}
+              </a>
+            ))}
+          </div>
+          <div class="flex flex-col gap-4">
+            <h4 class="font-bold text-black text-lg">Enlaces</h4>
+            {info.map((item) => (
+              <a
+                href={item.href}
+                target={item.target || "_self"}
+                rel={item.target === "_blank" ? "noopener noreferrer" : undefined}
+                class="text-gray-500 hover:text-black transition-colors text-base break-all sm:break-normal"
+              >
+                {item.name}
+              </a>
+            ))}
+          </div>
+        </div>
+      </div>
+
+      <!-- Bottom bar -->
+      <div class="flex justify-center mt-16">
+        <p class="text-black text-base">
+          Creado por <span class="text-gray-900 font-semibold">Luis Salazar</span> © 2026
+        </p>
+      </div>
+    </footer>
+  </div>
+</section>
+
+<style>
+  .footer-gradient-text {
+    background: linear-gradient(
+      90deg,
+      #04ADEE 0%,
+      #52B0E7 20%,
+      #03D5DB 40%,
+      #03D5BB 60%,
+      #08CEA5 80%,
+      #0CCB97 100%
+    );
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+    color: transparent;
+  }
+</style>

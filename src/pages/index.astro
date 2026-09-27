@@ -1,28 +1,36 @@
 ---
 import Layout from "../layouts/Layout.astro";
-import Hero from "../components/Hero.astro";
-import Proyecto from "../components/Proyecto.astro";
-import Experiencia from "../components/Experiencia.astro";
-import Habilidades from "../components/Habilidades.astro";
-import Contacto from "../components/Contacto.astro";
+import Hero2 from "../components/Hero2.astro";
+import AcercaDeMi2 from "../components/AcercaDeMi2.astro";
+import Proyecto2 from "../components/Proyecto2.astro";
+import Experiencia2 from "../components/Experiencia2.astro";
+import Beneficios from "../components/Beneficios.astro";
+import Blogs from "../components/Blogs.astro";
 ---
 
 <Layout>
-  <main class="w-full max-w-[900px] mx-auto px-6 md:px-8">
+  <main class="w-full max-w-[1200px] mx-auto px-6 sm:px-8 md:px-8">
     <section id="inicio">
-      <Hero />
+      <Hero2 />
     </section>
-    <section id="experiencia" class="my-24">
-      <Experiencia />
+    <section id="acerca-de-mi">
+      <AcercaDeMi2 />
     </section>
-     <section id="proyectos" class="mt-24">
-      <Proyecto />
+    <section id="beneficios">
+      <Beneficios />
     </section>
-    <section id="habilidades" class="mt-24">
-      <Habilidades />
+    <section id="experiencia">
+      <Experiencia2 />
     </section>
-    <section id="contacto" class="mt-24">
-      <Contacto />
+  </main>
+
+  <section id="proyectos" class="w-full overflow-hidden">
+    <Proyecto2 />
+  </section>
+
+  <main class="w-full max-w-[1200px] mx-auto px-6 sm:px-8 md:px-8">
+    <section id="blogs">
+      <Blogs />
     </section>
   </main>
 </Layout>
